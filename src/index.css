@@ -59,25 +59,20 @@ body {
 
 .header__cart {
     position: relative;
-    top: 4px;
+    top: 2px;
+    fill: currentColor;
+    color: #69707D;
 }
 
-.header__cartimg {
-    -webkit-mask: url(../images/icon-cart.svg) no-repeat;
-    mask: url(../images/icon-cart.svg) no-repeat;
-    -webkit-mask-size: contain;
-    mask-size: contain;
-    width: 1.2rem;
-    height: 1.2rem;
-    background-color: #69707D;
+.header__cartimg, .header__cart svg {
+    transform: scale(.9);
 }
 
-.header__cart:hover .header__cartimg{
-    background-color: black;
+.header__cart:hover {
+    color: black;
 }
 
 .header__amount {
-    display: none;
     position: absolute;
     top: -4px;
     right: -5px;
@@ -154,18 +149,6 @@ main {
     width: 100%;
 }
 
-.images {
-    position: relative;
-}
-
-.images__image {
-    display: none;
-    width: 100%;
-    height: 75vw;
-    object-fit: cover;
-    pointer-events: none;
-}
-
 @keyframes slideOut {
     0% {
         opacity: 1;
@@ -211,14 +194,6 @@ main {
     mask-size: contain;
     background-color: black;
     left: 3px;
-}
-
-.images__prev {
-    left: 4%;
-}
-
-.images__next {
-    right: 4%;
 }
 
 .cart {
@@ -282,7 +257,7 @@ main {
     margin-bottom: 1rem;
 }
 
-.header__menu:hover, .header__avatar:hover, .header__cart:hover, .images__button:hover, .modal__button:hover {
+.header__menu:hover, .header__avatar:hover, .header__cart:hover, .images__button:hover, .modal__button:hover, .carousel__arrow {
     cursor: pointer;
 }
 
@@ -304,23 +279,18 @@ main {
     font-weight: 700;
     width: 100%;
     text-align: center;
-    padding-block: 1.1rem;
+    padding-block: .85rem;
     border-radius: .5rem;
 }
 
 .cart__button::before {
-    content: '';
-    -webkit-mask: url(../images/icon-cart.svg) no-repeat;
-    mask: url(../images/icon-previous.svg) no-repeat;
-    -webkit-mask-size: contain;
-    mask-size: contain;
-    background-color: white;
+    content: url('images/icon-cart.svg');
     display: inline-block;
-    width: 1rem;
-    height: 1rem;
     position: relative;
-    right: 7px;
-    vertical-align: bottom;
+    right: 4px;
+    top: -1px;
+    transform: scale(.75);
+    vertical-align: middle;
 }
 
 @media (min-width: 768px) {
@@ -346,7 +316,6 @@ main {
         max-height: unset;
         object-fit: cover;
         border-radius: .6rem;
-        pointer-events: unset;
     }
 
     .images__button {
@@ -448,7 +417,6 @@ main {
 }
 
 .hiddenCart {
-    display: none;
     position: absolute;
     top: 4.5rem;
     left: 0;
@@ -484,8 +452,32 @@ main {
     color: hsl(219, 9%, 45%);
 }
 
-.hiddenCart__text-inactive {
-    display: none;
+.hiddenObj {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    color: hsl(219, 9%, 45%);
+    margin-block: .4rem .3rem;
+}
+
+.hiddenObj__img {
+    width: 3.5rem;
+    object-fit: cover;
+    border-radius: .3rem;
+}
+
+.hiddenObj__text, .hiddenObj__price {
+    margin-block: 0 .2rem;
+}
+
+.hiddenObj__price {
+    word-spacing: .1rem;
+}
+
+.hiddenObj__span {
+    color: black;
+    font-weight: 700;
 }
 
 @media (min-width: 768px) {
@@ -541,7 +533,7 @@ main {
         left: 0;
         bottom: 0;
         right: 0;
-        background-color: rgb(0 0 0 / .7);
+        background-color: rgb(255 255 255 / .7);
     }
 
     .modal--active {
@@ -574,26 +566,22 @@ main {
         background-color: hsl(26, 100%, 55%);
     }
 
-    .modal__closeimg {
-        width: 1rem;
-        height: 1rem;
-        display: block;
-        margin-inline: auto;
-        -webkit-mask: url(../images/icon-close.svg) no-repeat;
-        mask: url(../images/icon-close.svg) no-repeat;
-        -webkit-mask-size: contain;
-        mask-size: contain;
-        background-color: white;
-    }
-
     .modal__images {
+        /* position: relative; */
         position: relative;
+        width: 28rem;
+        height: 28rem;
     }
 
     .modal__image {
-        display: none;
-        width: 28rem;
+        /* width: 28rem; */
         border-radius: .6rem;
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: auto;
+        z-index: -1;
     }
 
     .modal__button {
@@ -647,7 +635,11 @@ main {
     animation: outOpacityFull .4s;
 }
 
-.fadein, .fadeout, .fadeinOpacity, .fadeoutOpacity, .fadeinOpacityFull, .fadeoutOpacityFull {
+.fadeoutOpacityFullZ {
+    animation: outOpacityFullZ .8s;
+}
+
+.fadein, .fadeout, .fadeinOpacity, .fadeoutOpacity, .fadeinOpacityFull, .fadeoutOpacityFull, .fadeoutOpacityFullZ {
     animation-fill-mode: forwards;
 }
 
@@ -705,6 +697,19 @@ main {
     }
 }  
 
+@keyframes outOpacityFullZ {
+    0% {
+        opacity: 1;
+        z-index: 0;
+    }
+    100% {
+        opacity: 0;
+        z-index: 0;
+    }
+}  
+
+
+
 /* new carousel */
 
 .carousel {
@@ -720,9 +725,15 @@ main {
     margin-block: 0;
     display: flex;
     width: 100%;
-    /* height: 75vw; */
     scrollbar-width: none;
     scroll-behavior: smooth;
+    pointer-events: none;
+}
+
+@media (min-width: 768px) {
+    .carousel__container {
+        pointer-events: unset;
+    }
 }
 
 .smoothauto {
@@ -752,16 +763,117 @@ main {
     width: 2rem;
     height: 2rem;
     border-radius: 50%;
-    cursor: pointer;
+    stroke: currentColor;
 }
 
-.carousel__arrow span {
+.carousel__arrow svg, .carousel__arrow img {
     position: absolute;
     top: 50%;
     left: 50%;
-    transform: translate(-50%, -50%);
+}
+
+.carousel__arrow:hover {
+    color: hsl(26, 100%, 55%);
+}
+
+.carousel__arrow-left {
+    left: 1.5rem;
 }
 
 .carousel__arrow-right {
-    right: 0;
+    right: 1.5rem;
+    /* margin-right: .5rem; */
+}
+
+.carousel__arrow-left img, .carousel__arrow-left svg {
+    transform: translate(-60%, -50%);
+}
+
+.carousel__arrow-right img, .carousel__arrow-right svg {
+    transform: translate(-40%, -50%);
+}
+
+@media (min-width: 768px) {
+    .carousel {
+        border-radius: .6rem;
+    }
+
+    .carousel__image img {
+        height: unset;
+    }
+}  
+
+/* d */
+
+.carouselModal {
+    position: relative;
+    overflow: hidden;
+    width: 100%;
+}
+
+.carouselModal__container {
+    overflow-x: scroll;
+    list-style: none;
+    padding: 0;
+    margin-block: 0;
+    display: flex;
+    width: 100%;
+}
+
+.carouselModal__image {
+    flex: 1 0 100%;
+}
+
+.carouselModal__image img {
+    height: 75vw;
+    object-fit: cover;
+}
+
+.carouselModal__arrow {
+    all: unset;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: white;
+    width: 2rem;
+    height: 2rem;
+    border-radius: 50%;
+    stroke: currentColor;
+}
+
+.carouselModal__arrow svg, .carouselModal__arrow img {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+}
+
+.carouselModal__arrow:hover {
+    color: hsl(26, 100%, 55%);
+}
+
+.carouselModal__arrow-left {
+    left: 1.5rem;
+}
+
+.carouselModal__arrow-right {
+    right: 1.5rem;
+    /* margin-right: .5rem; */
+}
+
+.carouselModal__arrow-left img, .carouselModal__arrow-left svg {
+    transform: translate(-60%, -50%);
+}
+
+.carouselModal__arrow-right img, .carouselModal__arrow-right svg {
+    transform: translate(-40%, -50%);
+}
+
+@media (min-width: 768px) {
+    .carouselModal {
+        border-radius: .6rem;
+    }
+
+    .carouselModal__image img {
+        height: unset;
+    }
 }
