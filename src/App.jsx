@@ -18,21 +18,22 @@ function App() {
     const [prevImage, setPrevImage] = useState(1)
     const [currentImage, setCurrentImage] = useState(1)
 
-    const carousel = useRef(null)
+    const handleButtonImageClick = amount => {
+        const pos = currentImage + amount
+        if(pos < 1 || pos > 4) return
+        setCurrentImage(pos)
+    }
+
+    const handleThumbnailClick = position => {
+        setCurrentImage(position)
+    }
+
+    const handleModalImageAnimationEnd = position => {
+        if(currentImage !== position) setPrevImage(currentImage)
+    }
 
     useEffect(() => {
-        window.addEventListener("resize", () => {
-            setWidth(window.innerWidth)
-            const {clientWidth, scrollWidth, scrollLeft} = carousel.current
-            carousel.current.classList.add('smoothauto')
-            for(let i = 0; i < scrollWidth; i += clientWidth) {
-                if(Math.abs(scrollLeft - i) < clientWidth / 2) {
-                    carousel.current.scrollLeft = i
-                    break
-                }
-            }
-            carousel.current.classList.remove('smoothauto')
-        })
+        window.addEventListener("resize", () => setWidth(window.innerWidth))
         return () => window.removeEventListener("resize", () => setWidth(window.innerWidth))
     }, [])
     return (
@@ -45,9 +46,9 @@ function App() {
                 cart={cart}
                 setCart={setCart}
             />
-            <Main width={width} setModal={setModal} setModalIsMounted={setModalIsMounted} carousel={carousel} quantity={quantity} setQuantity={setQuantity} productCart={productCart} setProductCart={setProductCart} currentImage={currentImage} setCurrentImage={setCurrentImage} prevImage={prevImage} setPrevImage={setPrevImage} />
+            <Main width={width} setModal={setModal} setModalIsMounted={setModalIsMounted} quantity={quantity} setQuantity={setQuantity} productCart={productCart} setProductCart={setProductCart} currentImage={currentImage} setCurrentImage={setCurrentImage} prevImage={prevImage} setPrevImage={setPrevImage} handleModalImageAnimationEnd={handleModalImageAnimationEnd} handleThumbnailClick={handleThumbnailClick} handleButtonImageClick={handleButtonImageClick} />
             {cart && <HiddenCart productCart={productCart} setProductCart={setProductCart} />}
-            {modal && <Modal setModal={setModal} modalIsMounted={modalIsMounted} setModalIsMounted={setModalIsMounted} currentImage={currentImage} setCurrentImage={setCurrentImage} prevImage={prevImage} setPrevImage={setPrevImage} />}
+            {modal && <Modal setModal={setModal} modalIsMounted={modalIsMounted} setModalIsMounted={setModalIsMounted} currentImage={currentImage} setCurrentImage={setCurrentImage} prevImage={prevImage} setPrevImage={setPrevImage} handleModalImageAnimationEnd={handleModalImageAnimationEnd} handleThumbnailClick={handleThumbnailClick} handleButtonImageClick={handleButtonImageClick} />}
             {overlay && <Overlay setOverlay={setOverlay} isMounted={isMounted} setIsMounted={setIsMounted}/>}
         </>
     )

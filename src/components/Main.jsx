@@ -1,22 +1,6 @@
 import { useEffect, useRef } from "react"
 
-const Main = ({width, setModal, setModalIsMounted, carousel, quantity, setQuantity, productCart, setProductCart, currentImage, setCurrentImage, prevImage, setPrevImage}) => {
-    const handleLeftClick = () => {
-        const clientWidth = carousel.current.clientWidth
-        const scrollLeft = carousel.current.scrollLeft
-        if(scrollLeft !== 0 && scrollLeft % clientWidth !== 0) return
-        carousel.current.scrollLeft = scrollLeft - clientWidth
-    }
-    const handleRightClick = () => {
-        const clientWidth = carousel.current.clientWidth
-        const scrollLeft = carousel.current.scrollLeft
-        if(scrollLeft !== 0 && scrollLeft % clientWidth !== 0) return
-        carousel.current.scrollLeft = scrollLeft + clientWidth
-    }
-    const handleThumbnailClick = position => {
-        setCurrentImage(position)
-        setPrevImage(position)
-    }
+const Main = ({width, setModal, setModalIsMounted, quantity, setQuantity, productCart, setProductCart, currentImage, setCurrentImage, prevImage, setPrevImage, handleModalImageAnimationEnd, handleThumbnailClick, handleButtonImageClick}) => {
     const handleClickModal = () => {
         setModalIsMounted(true)
         setModal(true)
@@ -31,8 +15,8 @@ const Main = ({width, setModal, setModalIsMounted, carousel, quantity, setQuanti
             img: '../images/image-product-1-thumbnail.jpg',
             name: selector.querySelector('.cart__title').textContent,
             price: parseFloat(selector.querySelector('.prices__price').textContent.slice(1)),
+            q: productCart['q'] + quantity || quantity
         }
-        obj['q'] = productCart['q'] + quantity || quantity
         obj.total = obj.q * obj.price
         setProductCart(obj)
     }
@@ -40,61 +24,36 @@ const Main = ({width, setModal, setModalIsMounted, carousel, quantity, setQuanti
         <main>
             <div className="main__grid">
                 <div className="grid__left">
-                    <div className='carousel'>
-                        <ul className='carousel__container' ref={carousel} onClick={handleClickModal}>
-                            {width < 768 ? (<li className='carousel__image'>
-                                <img src="images/image-product-1.jpg" alt="image product 1" width={1000} height={1000} />
-                            </li>) : prevImage === 1 && (
-                                <li className='carousel__image'>
-                                    <img src="images/image-product-1.jpg" alt="image product 1" width={1000} height={1000} />
-                                </li>
-                            )}
-                            {width < 768 ? (<li className='carousel__image'>
-                                <img src="images/image-product-2.jpg" alt="image product 2" width={1000} height={1000} />
-                            </li>) : prevImage === 2 && (
-                                <li className='carousel__image'>
-                                    <img src="images/image-product-2.jpg" alt="image product 2" width={1000} height={1000} />
-                                </li>
-                            )}
-                            {width < 768 ? (<li className='carousel__image'>
-                                <img src="images/image-product-3.jpg" alt="image product 3" width={1000} height={1000} />
-                            </li>) : prevImage === 3 && (
-                                <li className='carousel__image'>
-                                    <img src="images/image-product-3.jpg" alt="image product 3" width={1000} height={1000} />
-                                </li>
-                            )}
-                            {width < 768 ? (<li className='carousel__image'>
-                                <img src="images/image-product-4.jpg" alt="image product 4" width={1000} height={1000} />
-                            </li>) : prevImage === 4 && (
-                                <li className='carousel__image'>
-                                    <img src="images/image-product-4.jpg" alt="image product 4" width={1000} height={1000} />
-                                </li>
-                            )}
-                        </ul>
+                    <div className='images'>
+                        <div className="pointerEvents" onClick={handleClickModal}>
+                            {(currentImage === 1 || prevImage === 1) && <img src="images/image-product-1.jpg" width={1000} height={1000} alt="product-1" className={`images__image ${currentImage !== 1 && 'fadeoutOpacityFullZ'}`} onAnimationEnd={() => handleModalImageAnimationEnd(1)} />}
+                            {(currentImage === 2 || prevImage === 2) && <img src="images/image-product-2.jpg" alt="product-2" width={1000} height={1000} className={`images__image ${currentImage !== 2 && 'fadeoutOpacityFullZ'}`} onAnimationEnd={() => handleModalImageAnimationEnd(2)} />}
+                            {(currentImage === 3 || prevImage === 3) && <img src="images/image-product-3.jpg" alt="product-3" width={1000} height={1000} className={`images__image ${currentImage !== 3 && 'fadeoutOpacityFullZ'}`} onAnimationEnd={() => handleModalImageAnimationEnd(3)} />}
+                            {(currentImage === 4 || prevImage === 4) && <img src="images/image-product-4.jpg" alt="product-4" width={1000} height={1000} className={`images__image ${currentImage !== 4 && 'fadeoutOpacityFullZ'}`} onAnimationEnd={() => handleModalImageAnimationEnd(4)} />}
+                        </div>
                         {width < 768 && (
                             <>
-                                <button className='carousel__arrow carousel__arrow-left' onClick={handleLeftClick}>
+                                <button className='carousel__arrow carousel__arrow-left' onClick={() => handleButtonImageClick(-1)}>
                                     <svg width="12" height="18" xmlns="http://www.w3.org/2000/svg"><path d="M11 1 3 9l8 8" strokeWidth="3" fill="none" fillRule="evenodd"/></svg>
                                 </button>
-                                <button className='carousel__arrow carousel__arrow-right' onClick={handleRightClick}>
+                                <button className='carousel__arrow carousel__arrow-right' onClick={() => handleButtonImageClick(1)}>
                                     <svg width="13" height="18" xmlns="http://www.w3.org/2000/svg"><path d="m2 1 8 8-8 8" strokeWidth="3" fill="none" fillRule="evenodd"/></svg>
                                 </button>
                             </>
-                        )}
-                        
+                        )}   
                     </div>
                     {width > 767 && (
                         <div className="thumbnail">
-                            <button className={`thumbnail__button ${prevImage === 1 && 'thumbnail__button--active'}`} onClick={() => handleThumbnailClick(1)}>
+                            <button className={`thumbnail__button ${currentImage === 1 && 'thumbnail__button--active'}`} onClick={() => handleThumbnailClick(1)}>
                                 <img src="images/image-product-1-thumbnail.jpg" alt="product-1" className="thumbnail__image" />
                             </button>
-                            <button className={`thumbnail__button ${prevImage === 2 && 'thumbnail__button--active'}`} onClick={() => handleThumbnailClick(2)}>
+                            <button className={`thumbnail__button ${currentImage === 2 && 'thumbnail__button--active'}`} onClick={() => handleThumbnailClick(2)}>
                                 <img src="images/image-product-2-thumbnail.jpg" alt="product-2" className="thumbnail__image" />
                             </button>
-                            <button className={`thumbnail__button ${prevImage === 3 && 'thumbnail__button--active'}`} onClick={() => handleThumbnailClick(3)}>
+                            <button className={`thumbnail__button ${currentImage === 3 && 'thumbnail__button--active'}`} onClick={() => handleThumbnailClick(3)}>
                                 <img src="images/image-product-3-thumbnail.jpg" alt="product-3" className="thumbnail__image" />
                             </button>
-                            <button className={`thumbnail__button ${prevImage === 4 && 'thumbnail__button--active'}`} onClick={() => handleThumbnailClick(4)}>
+                            <button className={`thumbnail__button ${currentImage === 4 && 'thumbnail__button--active'}`} onClick={() => handleThumbnailClick(4)}>
                                 <img src="images/image-product-4-thumbnail.jpg" alt="product-4" className="thumbnail__image" />
                             </button>
                         </div>
