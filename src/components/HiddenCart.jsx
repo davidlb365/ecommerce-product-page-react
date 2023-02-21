@@ -13,7 +13,7 @@ const HiddenCart = ({productCart, setProductCart}) => {
                                 <p className="hiddenObj__text">{productCart.name}</p>
                                 <p className="hiddenObj__price">${productCart.price.toString()} x {productCart.q.toString()} <span className="hiddenObj__span">${productCart.total.toString()}</span></p>
                             </div>
-                            <button>
+                            <button aria-label="delete">
                                 <img src="/images/icon-delete.svg" alt="delete button" width={14} height={16} onClick={() => setProductCart({})}/>
                             </button>
                         </div>
