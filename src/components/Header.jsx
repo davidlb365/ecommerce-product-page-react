@@ -1,5 +1,3 @@
-import { useState, useEffect } from "react"
-
 
 const Header = ({width, setOverlay, setIsMounted, productCart, cart, setCart}) => {
 

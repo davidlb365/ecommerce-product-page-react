@@ -1,5 +1,4 @@
 
-
 const HiddenCart = ({productCart, setProductCart}) => {
     return (
         <div className="hiddenCart" id="hidden-cart">

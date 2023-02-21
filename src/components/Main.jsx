@@ -1,4 +1,3 @@
-import { useEffect, useRef } from "react"
 
 const Main = ({width, setModal, setModalIsMounted, quantity, setQuantity, productCart, setProductCart, currentImage, setCurrentImage, prevImage, setPrevImage, handleModalImageAnimationEnd, handleThumbnailClick, handleButtonImageClick}) => {
     const handleClickModal = () => {
