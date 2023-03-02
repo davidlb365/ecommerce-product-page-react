@@ -390,15 +390,9 @@ button:hover, .header__menu:hover, .header__avatar:hover, .header__cart:hover, .
     }
 }
 
-@media (min-width: 1280px) {
-    main {
-        max-width: 1280px;
-    }
-}
-
 @media (min-width: 1536px) {
     main {
-        max-width: 1536px;
+        max-width: 1280px;
     }
 }
 
