@@ -25,34 +25,26 @@ const Main = ({width, setModal, setModalIsMounted, quantity, setQuantity, produc
                 <div className="grid__left">
                     <div className='images'>
                         <div className="pointerEvents" onClick={handleClickModal}>
-                            {(currentImage === 1 || prevImage === 1) && (
-                                <picture>
-                                    <source srcSet="images/image-product-1.avif" type="image/avif" />
-                                    <source srcSet="images/image-product-1.webp" type="image/webp" />
-                                    <img src="images/image-product-1.jpg" width={1000} height={1000} alt="product-1" className={`images__image ${currentImage !== 1 && 'fadeoutOpacityFullZ'}`} onAnimationEnd={() => handleModalImageAnimationEnd(1)} />
-                                </picture>
-                            )}
-                            {(currentImage === 2 || prevImage === 2) && (
-                                <picture>
-                                    <source srcSet="images/image-product-2.avif" type="image/avif" />
-                                    <source srcSet="images/image-product-2.webp" type="image/webp" />
-                                    <img src="images/image-product-2.jpg" width={1000} height={1000} alt="product-2" className={`images__image ${currentImage !== 2 && 'fadeoutOpacityFullZ'}`} onAnimationEnd={() => handleModalImageAnimationEnd(2)} />
-                                </picture>
-                            )}
-                            {(currentImage === 3 || prevImage === 3) && (
-                                <picture>
-                                    <source srcSet="images/image-product-3.avif" type="image/avif" />
-                                    <source srcSet="images/image-product-3.webp" type="image/webp" />
-                                    <img src="images/image-product-3.jpg" width={1000} height={1000} alt="product-3" className={`images__image ${currentImage !== 3 && 'fadeoutOpacityFullZ'}`} onAnimationEnd={() => handleModalImageAnimationEnd(3)} />
-                                </picture>
-                            )}
-                            {(currentImage === 4 || prevImage === 4) && (
-                                <picture>
-                                    <source srcSet="images/image-product-4.avif" type="image/avif" />
-                                    <source srcSet="images/image-product-4.webp" type="image/webp" />
-                                    <img src="images/image-product-4.jpg" width={1000} height={1000} alt="product-4" className={`images__image ${currentImage !== 4 && 'fadeoutOpacityFullZ'}`} onAnimationEnd={() => handleModalImageAnimationEnd(4)} />
-                                </picture>
-                            )}
+                            <picture>
+                                <source srcSet="images/image-product-1.avif" type="image/avif" />
+                                <source srcSet="images/image-product-1.webp" type="image/webp" />
+                                <img src="images/image-product-1.jpg" width={1000} height={1000} alt="product-1" className={`images__image ${currentImage === 1 && 'images__image--active'} ${prevImage === 1 && currentImage !== 1 && 'fadeoutOpacityFullZ'} ${prevImage !== 1 && currentImage !== 1 && 'images__image--inactive'}`} onAnimationEnd={() => handleModalImageAnimationEnd(1)} />
+                            </picture>
+                            <picture>
+                                <source srcSet="images/image-product-2.avif" type="image/avif" />
+                                <source srcSet="images/image-product-2.webp" type="image/webp" />
+                                <img src="images/image-product-2.jpg" width={1000} height={1000} alt="product-2" className={`images__image ${currentImage === 2 && 'images__image--active'} ${prevImage === 2 && currentImage !== 2 && 'fadeoutOpacityFullZ'} ${prevImage !== 2 && currentImage !== 2 && 'images__image--inactive'}`} onAnimationEnd={() => handleModalImageAnimationEnd(2)} />
+                            </picture>
+                            <picture>
+                                <source srcSet="images/image-product-3.avif" type="image/avif" />
+                                <source srcSet="images/image-product-3.webp" type="image/webp" />
+                                <img src="images/image-product-3.jpg" width={1000} height={1000} alt="product-3" className={`images__image ${currentImage === 3 && 'images__image--active'} ${prevImage === 3 && currentImage !== 3 && 'fadeoutOpacityFullZ'} ${prevImage !== 3 && currentImage !== 3 && 'images__image--inactive'}`} onAnimationEnd={() => handleModalImageAnimationEnd(3)} />
+                            </picture>
+                            <picture>
+                                <source srcSet="images/image-product-4.avif" type="image/avif" />
+                                <source srcSet="images/image-product-4.webp" type="image/webp" />
+                                <img src="images/image-product-4.jpg" width={1000} height={1000} alt="product-4" className={`images__image ${currentImage === 4 && 'images__image--active'} ${prevImage === 4 && currentImage !== 4 && 'fadeoutOpacityFullZ'} ${prevImage !== 4 && currentImage !== 4 && 'images__image--inactive'}`} onAnimationEnd={() => handleModalImageAnimationEnd(4)} />
+                            </picture>
                         </div>
                         {width < 768 && (
                             <>
