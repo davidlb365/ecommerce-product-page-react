@@ -597,7 +597,7 @@ button:hover, .header__menu:hover, .header__avatar:hover, .header__cart:hover, .
 }
 
 .fadeoutOpacityFullZ {
-    animation: outOpacityFullZ .6s;
+    animation: outOpacityFullZ 1s;
 }
 
 .fadein, .fadeout, .fadeinOpacity, .fadeoutOpacity, .fadeinOpacityFull, .fadeoutOpacityFull, .fadeoutOpacityFullZ {
